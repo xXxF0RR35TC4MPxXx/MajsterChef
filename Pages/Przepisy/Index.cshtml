@@ -1,0 +1,61 @@
+﻿@page
+@model MajsterChef.Pages.Przepisy.IndexModel
+
+@{
+    ViewData["Title"] = "Lista przepisów!";
+}
+
+<h1>Lista przepisów użytkowników</h1>
+@if(!(string.IsNullOrEmpty(User.Identity.Name)))
+{ <p>
+    <a asp-page="Create">Dodaj nowy przepis!</a>
+</p>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Przepis[0].Owner)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Przepis[0].Nazwa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Przepis[0].Opis_wykonania)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Przepis[0].Data_publikacji)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Przepis) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Owner)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nazwa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Opis_wykonania)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Data_publikacji)
+            </td>
+            <td>
+                <p>
+                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a>
+                    @if (item.Owner == User.Identity.Name)
+                    {
+                        <text>| </text><a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> ;
+                        <text>| </text><a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>;
+                    }
+                </p>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,55 @@
+﻿@page
+@model MajsterChef.Pages.Przepisy.EditModel
+
+@{
+    ViewData["Title"] = "Edytuj przepis";
+
+}
+
+<h1>Edytuj przepis</h1>
+
+<h4>Przepis</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        @if (Model.Przepis.Owner == User.Identity.Name)
+        {
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Przepis.ID" />
+            <div class="form-group">
+                <label asp-for="Przepis.Owner" class="control-label"></label>
+                <input asp-for="Przepis.Owner" class="form-control" />
+                <span asp-validation-for="Przepis.Owner" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Przepis.Nazwa" class="control-label"></label>
+                <input asp-for="Przepis.Nazwa" class="form-control" />
+                <span asp-validation-for="Przepis.Nazwa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Przepis.Opis_wykonania" class="control-label"></label>
+                <input asp-for="Przepis.Opis_wykonania" class="form-control" />
+                <span asp-validation-for="Przepis.Opis_wykonania" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Przepis.Data_publikacji" class="control-label"></label>
+                <input asp-for="Przepis.Data_publikacji" class="form-control" />
+                <span asp-validation-for="Przepis.Data_publikacji" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+        }
+            else { <p>Nie możesz edytować przepisu, którego nie dodałeś.</p>}
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Wróć do listy</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
