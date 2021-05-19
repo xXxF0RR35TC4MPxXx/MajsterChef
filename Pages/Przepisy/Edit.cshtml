@@ -18,11 +18,6 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Przepis.ID" />
             <div class="form-group">
-                <label asp-for="Przepis.Owner" class="control-label"></label>
-                <input asp-for="Przepis.Owner" class="form-control" />
-                <span asp-validation-for="Przepis.Owner" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Przepis.Nazwa" class="control-label"></label>
                 <input asp-for="Przepis.Nazwa" class="form-control" />
                 <span asp-validation-for="Przepis.Nazwa" class="text-danger"></span>
@@ -33,9 +28,9 @@
                 <span asp-validation-for="Przepis.Opis_wykonania" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Przepis.Data_publikacji" class="control-label"></label>
-                <input asp-for="Przepis.Data_publikacji" class="form-control" />
-                <span asp-validation-for="Przepis.Data_publikacji" class="text-danger"></span>
+                <label asp-for="Przepis.Lista_skladnikow" class="control-label"></label>
+                <input asp-for="Przepis.Lista_skladnikow" class="form-control" />
+                <span asp-validation-for="Przepis.Lista_skladnikow" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

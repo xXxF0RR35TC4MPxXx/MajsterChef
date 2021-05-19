@@ -18,7 +18,12 @@ namespace MajsterChef.Pages.Przepisy
         {
             _context = context;
         }
-
+        public string UserName(string name)
+        {
+            if (!String.IsNullOrEmpty(name))
+                return name.Split('@')[0];
+            else return "Anonymous";
+        }
         public IList<Przepis> Przepis { get;set; }
 
         public async Task OnGetAsync()

@@ -22,25 +22,18 @@
                 @Html.DisplayNameFor(model => model.Przepis[0].Nazwa)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Przepis[0].Opis_wykonania)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Przepis[0].Data_publikacji)
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model.Przepis) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Owner)
+                @Model.UserName(item.Owner)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Nazwa)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Opis_wykonania)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Data_publikacji)

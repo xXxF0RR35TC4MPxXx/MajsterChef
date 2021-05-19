@@ -12,22 +12,28 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Przepis.Owner)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Przepis.Owner)
-        </dd>
-        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Przepis.Nazwa)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Przepis.Nazwa)
         </dd>
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Przepis.Lista_skladnikow)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Przepis.Lista_skladnikow)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Przepis.Opis_wykonania)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Przepis.Opis_wykonania)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Przepis.Owner)
+        </dt>
+        <dd class="col-sm-10">
+            @Model.UserName(Model.Przepis.Owner)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Przepis.Data_publikacji)
