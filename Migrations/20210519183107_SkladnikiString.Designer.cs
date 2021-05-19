@@ -4,14 +4,16 @@ using MajsterChef.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MajsterChef.Migrations
 {
     [DbContext(typeof(PrzepisContext))]
-    partial class PrzepisContextModelSnapshot : ModelSnapshot
+    [Migration("20210519183107_SkladnikiString")]
+    partial class SkladnikiString
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

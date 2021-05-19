@@ -18,6 +18,8 @@ namespace MajsterChef.Models
         [MaxLength(2000)]
         public string Opis_wykonania { get; set; }
         public DateTime Data_publikacji { get; set; }
-        public ICollection<Skladnik> Lista_skladnikow { get; set; }
+        [Required]
+        [MaxLength(500)]
+        public string Lista_skladnikow { get; set; }
     }
 }
