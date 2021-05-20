@@ -11,44 +11,53 @@
     <a asp-page="Create">Dodaj nowy przepis!</a>
 </p>
 }
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Przepis[0].Owner)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Przepis[0].Nazwa)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Przepis[0].Data_publikacji)
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Przepis) {
-        <tr>
-            <td>
-                @Model.UserName(item.Owner)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nazwa)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Data_publikacji)
-            </td>
-            <td>
-                <p>
-                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a>
-                    @if (item.Owner == User.Identity.Name)
-                    {
-                        <text>| </text><a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> ;
-                        <text>| </text><a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>;
-                    }
-                </p>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Wyszukaj: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-action="Index">Wróć do wszystkich przepisów</a>
+        </p>
+    </div>
+</form>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Przepis[0].Owner)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Przepis[0].Nazwa)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Przepis[0].Data_publikacji)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Przepis)
+            {
+                <tr>
+                    <td>
+                        @Model.UserName(item.Owner)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nazwa)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Data_publikacji)
+                    </td>
+                    <td>
+                        <p>
+                            <a asp-page="./Details" asp-route-id="@item.ID">Details</a>
+                            @if (item.Owner == User.Identity.Name)
+                            {
+                                <text>| </text><a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> ;
+                                <text>| </text><a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>;
+                            }
+                        </p>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>

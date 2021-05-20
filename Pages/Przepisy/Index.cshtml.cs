@@ -25,10 +25,16 @@ namespace MajsterChef.Pages.Przepisy
             else return "Anonymous";
         }
         public IList<Przepis> Przepis { get;set; }
-
-        public async Task OnGetAsync()
-        {
-            Przepis = await _context.Przepis.OrderByDescending(u=>u.Data_publikacji).ToListAsync();
+        public async Task OnGetAsync(string searchString)
+        { 
+            IQueryable<Przepis> przepisyIQ = from s in _context.Przepis
+                                             select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                przepisyIQ = przepisyIQ.Where(s => s.Owner.Contains(searchString)
+                                       || s.Nazwa.Contains(searchString));
+            }
+            Przepis = await przepisyIQ.AsNoTracking().OrderByDescending(u=>u.Data_publikacji).ToListAsync();
         }
     }
 }
