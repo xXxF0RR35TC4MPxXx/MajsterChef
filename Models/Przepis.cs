@@ -21,5 +21,8 @@ namespace MajsterChef.Models
         [Required]
         [MaxLength(500)]
         public string Lista_skladnikow { get; set; }
+        public int Likes { get; set; }
+        public int Dislikes { get; set; }
+        public int Score { get; set; }
     }
 }

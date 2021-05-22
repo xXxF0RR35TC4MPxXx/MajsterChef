@@ -1,25 +1,40 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MajsterChef.Data;
+using MajsterChef.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MajsterChef.Pages
+namespace MajsterChef
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly PrzepisContext _context;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(PrzepisContext context)
         {
-            _logger = logger;
+            _context = context;
         }
-
-        public void OnGet()
+        public string UserName(string name)
         {
-
+            if (!String.IsNullOrEmpty(name))
+                return name.Split('@')[0];
+            else return "Anonymous";
+        }
+        public IList<Przepis> Przepis { get; set; }
+        public async Task OnGetAsync(string searchString)
+        {
+            IQueryable<Przepis> przepisyIQ = from s in _context.Przepis select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                przepisyIQ = przepisyIQ.Where(s => s.Owner.Contains(searchString)
+                                       || s.Nazwa.Contains(searchString));
+            }
+            Przepis = await przepisyIQ.AsNoTracking().OrderByDescending(u => u.Score).Take(10).ToListAsync();
         }
     }
 }

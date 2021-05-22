@@ -1,10 +1,7 @@
 ﻿@page
 @model MajsterChef.Pages.Przepisy.DetailsModel
-
-@{
-    ViewData["Title"] = "Szczegóły przepisu";
-}
-
+@{ ViewData["Title"] = "Szczegóły przepisu";
+    Model.EntryID = Model.Przepis.ID;}
 <h1>Szczegóły</h1>
 
 <div>
@@ -41,6 +38,59 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Przepis.Data_publikacji)
         </dd>
+        @if (!string.IsNullOrWhiteSpace(User.Identity.Name))
+        {
+            <dt class="col-sm-2">
+                Ocena
+            </dt>
+            <dd class="col-sm-10">
+                
+                <form runat="server" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                    @if (Model.DisableDislike != "disable")
+                    {
+                        <div style="display:inline;float:left">
+                            <button id="btnDislike"
+                                    Text="-"
+                                    type="submit"
+                                    name="button"
+                                    value="dislike"
+                                    runat="server"
+                                    height="auto"
+                                    width="50px"
+                                    BorderStyle="Outset"
+                                    onclick="this.disabled = true;"
+                                    disabled=@Model.DisableDislike
+                                    asp-route-itemid="@Model.Przepis.ID"
+                                    asp-page-handler="Dislike">
+                                -
+                            </button>&nbsp;
+
+                        </div>
+                    }
+                    &nbsp; @Model.Score() &nbsp;
+                    @if (Model.DisableLike != "disabled")
+                    {
+                        <div style="display:inline;float:left">
+                            <button id="btnLike"
+                                    Text="+"
+                                    type="submit"
+                                    value="like"
+                                    name="button"
+                                    runat="server"
+                                    height="auto"
+                                    width="50px"
+                                    BorderStyle="Outset"
+                                    onclick="this.disabled = true;"
+                                    disabled=@Model.DisableLike
+                                    asp-route-itemid="@Model.Przepis.ID"
+                                    asp-page-handler="Like">
+                                +
+                            </button>
+                        </div>
+                    }
+                </form>
+            </dd>
+         }
     </dl>
 </div>
 <div>

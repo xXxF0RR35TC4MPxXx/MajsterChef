@@ -14,9 +14,9 @@ namespace MajsterChef.Pages.Przepisy
     [Authorize]
     public class CreateModel : PageModel
     {
-        private readonly MajsterChef.Data.PrzepisContext _context;
+        private readonly PrzepisContext _context;
 
-        public CreateModel(MajsterChef.Data.PrzepisContext context)
+        public CreateModel(PrzepisContext context)
         {
             _context = context;
         }

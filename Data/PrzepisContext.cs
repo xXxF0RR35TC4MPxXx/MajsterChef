@@ -12,7 +12,8 @@ namespace MajsterChef.Data
     public class PrzepisContext:DbContext
     {
         public PrzepisContext(DbContextOptions<PrzepisContext> options) : base(options) { }
+        public PrzepisContext(){ }
         public DbSet<Przepis> Przepis { get; set; }
-
+        public DbSet<Oceny> Oceny { get; set; }
     }
 }
