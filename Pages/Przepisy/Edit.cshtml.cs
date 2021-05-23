@@ -15,9 +15,9 @@ namespace MajsterChef.Pages.Przepisy
     [Authorize]
     public class EditModel : PageModel
     {
-        private readonly MajsterChef.Data.PrzepisContext _context;
+        private readonly PrzepisContext _context;
 
-        public EditModel(MajsterChef.Data.PrzepisContext context)
+        public EditModel(PrzepisContext context)
         {
             _context = context;
         }
