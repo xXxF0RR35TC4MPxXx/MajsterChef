@@ -25,6 +25,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Przepisy/Index">Lista Przepisów</a>
                         </li>
+                        @if (!string.IsNullOrEmpty(User.Identity.Name))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Ulubione/Index">Twoje Ulubione</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

@@ -12,9 +12,9 @@ namespace MajsterChef.Pages.Przepisy
 {
     public class IndexModel : PageModel
     {
-        private readonly MajsterChef.Data.PrzepisContext _context;
+        private readonly PrzepisContext _context;
 
-        public IndexModel(MajsterChef.Data.PrzepisContext context)
+        public IndexModel(PrzepisContext context)
         {
             _context = context;
         }

@@ -54,8 +54,7 @@ namespace MajsterChef.Pages.Przepisy
             return Page();
         }
 
-        public string DisableLike;
-        public string DisableDislike;
+        public string DisableLike, DisableDislike, DisableFavourite;
 
 
         public int Score()
@@ -76,7 +75,51 @@ namespace MajsterChef.Pages.Przepisy
             // all  done
             return RedirectToPage("Index");
         }
-        
+        public async Task<IActionResult> OnPostFavourite()
+        {
+            BtnFavourite_Click();
+            await _context.SaveChangesAsync();
+            // all  done
+            return RedirectToPage("Index");
+        }
+        private void BtnFavourite_Click()
+        {
+            DisableLike = "disable";
+            DisableDislike = "disable";
+            using SqlConnection con = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=PrzepisyDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            using SqlCommand command = con.CreateCommand();
+            con.Open();
+
+            //pobieranie ID obecnie przeglądanego przepisu
+            var result = new string(Request.QueryString.ToString().Where(c => char.IsDigit(c)).ToArray());
+            int resultint = Convert.ToInt32(result);
+            command.Parameters.AddWithValue("@idprzepis", resultint);
+            command.Parameters.AddWithValue("@iduser", User.Identity.Name);
+
+            //favIQ == wszystkie polubienia wszystkich userów
+            IQueryable<Favourites> favIQ = from f in _context.Favourites select f;
+
+            //pp == wszystkie przepisy
+            IQueryable<Przepis> pp = from p in _context.Przepis select p;
+            bool any = favIQ.Any(u => u.Id_usera == User.Identity.Name && u.Przepis.ID == resultint);
+
+            //ppp == obecnie przeglądany przepis
+            Przepis ppp = pp.FirstOrDefault(pp => pp.ID == resultint);
+            if(!any)
+            {
+                //tutaj zrobić dodawanie do ulubionych
+                //command.CommandText = "INSERT INTO dbo.Favourites (Id_usera, PrzepisID) VALUES (@iduser, @idprzepis)";
+                //command.ExecuteNonQuery();
+                Favourites fav = new Favourites
+                {
+                    Id_usera = User.Identity.Name,
+                    Przepis = ppp
+                };
+                _context.Favourites.Add(fav);
+                _context.SaveChanges();
+            }
+            con.Close();
+        }
         private void BtnLike_Click()
         {
             DisableLike = "disable";

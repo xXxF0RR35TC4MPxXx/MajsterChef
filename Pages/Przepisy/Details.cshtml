@@ -44,7 +44,7 @@
                 Ocena
             </dt>
             <dd class="col-sm-10">
-                
+
                 <form runat="server" asp-route-returnUrl="@Model.ReturnUrl" method="post">
                     @if (Model.DisableDislike != "disable")
                     {
@@ -87,10 +87,33 @@
                                 +
                             </button>
                         </div>
-                    }
+                    }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <div style="display:inline;float:left">
+                        <button id="btnFav"
+                                Text="Fav"
+                                type="submit"
+                                value="fav"
+                                name="button"
+                                runat="server"
+                                height="auto"
+                                width="50px"
+                                BorderStyle="Outset"
+                                onclick="this.disabled = true;"
+                                disabled=@Model.DisableFavourite
+                                asp-route-itemid="@Model.Przepis.ID"
+                                asp-page-handler="Favourite">
+                            Dodaj do ulubionych!
+                        </button>
+                    </div>
                 </form>
             </dd>
-         }
+            <dt class="col-sm-2">
+                
+            </dt>
+            <dd class="col-sm-10">
+                
+            </dd>
+        }
     </dl>
 </div>
 <div>

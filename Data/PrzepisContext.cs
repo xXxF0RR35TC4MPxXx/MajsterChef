@@ -15,5 +15,6 @@ namespace MajsterChef.Data
         public PrzepisContext(){ }
         public DbSet<Przepis> Przepis { get; set; }
         public DbSet<Oceny> Oceny { get; set; }
+        public DbSet<Favourites> Favourites { get; set; }
     }
 }

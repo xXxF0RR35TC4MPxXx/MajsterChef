@@ -1,0 +1,42 @@
+﻿@page
+@model MajsterChef.Pages.Ulubione.IndexModel
+
+@{
+    ViewData["Title"] = "Twoje ulubione!";
+}
+
+<h1>Twoje ulubione przepisy!</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Favourites[0].Przepis.Nazwa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Favourites[0].Przepis.Data_publikacji)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Favourites[0].Przepis.Score)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Favourites) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Przepis.Nazwa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Przepis.Data_publikacji)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Przepis.Score)
+            </td>
+            <td>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

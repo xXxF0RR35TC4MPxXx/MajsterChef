@@ -4,40 +4,22 @@ using MajsterChef.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MajsterChef.Migrations
 {
     [DbContext(typeof(PrzepisContext))]
-    partial class PrzepisContextModelSnapshot : ModelSnapshot
+    [Migration("20210523120906_AddFavourites")]
+    partial class AddFavourites
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.15")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("MajsterChef.Models.Favourites", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Id_usera")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("PrzepisID")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PrzepisID");
-
-                    b.ToTable("Favourites");
-                });
 
             modelBuilder.Entity("MajsterChef.Models.Oceny", b =>
                 {
@@ -102,13 +84,6 @@ namespace MajsterChef.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Przepis");
-                });
-
-            modelBuilder.Entity("MajsterChef.Models.Favourites", b =>
-                {
-                    b.HasOne("MajsterChef.Models.Przepis", "Przepis")
-                        .WithMany()
-                        .HasForeignKey("PrzepisID");
                 });
 #pragma warning restore 612, 618
         }
