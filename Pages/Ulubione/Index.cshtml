@@ -11,30 +11,44 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Favourites[0].Przepis.Nazwa)
+                @Html.DisplayNameFor(model => model.Przepisy[0].Owner)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Favourites[0].Przepis.Data_publikacji)
+                @Html.DisplayNameFor(model => model.Przepisy[0].Nazwa)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Favourites[0].Przepis.Score)
+                @Html.DisplayNameFor(model => model.Przepisy[0].Data_publikacji)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Przepisy[0].Score)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Favourites) {
+@foreach (var item in Model.Przepisy) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Przepis.Nazwa)
+                @Model.UserName(item.Owner)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Przepis.Data_publikacji)
+                @Html.DisplayFor(modelItem => item.Nazwa)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Przepis.Score)
+                @Html.DisplayFor(modelItem => item.Data_publikacji)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Score)
+            </td>
+            <td>
+                <p>
+                    <a asp-page="/Przepisy/Details" asp-route-id="@item.ID">Details</a>
+                    @if (item.Owner == User.Identity.Name)
+                    {
+                        <text>| </text><a asp-page="/Przepisy/Edit" asp-route-id="@item.ID">Edit</a> ;
+                        <text>| </text><a asp-page="/Przepisy/Delete" asp-route-id="@item.ID">Delete</a>;
+                    }
+                </p>
             </td>
         </tr>
 }

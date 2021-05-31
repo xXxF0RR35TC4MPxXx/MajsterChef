@@ -14,6 +14,6 @@ namespace MajsterChef.Models
 
         public string Id_usera { get; set; }
 
-        public Przepis Przepis { get; set; }
+        public int PrzepisID { get; set; }
     }
 }

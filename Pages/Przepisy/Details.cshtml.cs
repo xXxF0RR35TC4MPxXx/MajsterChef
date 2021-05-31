@@ -101,7 +101,7 @@ namespace MajsterChef.Pages.Przepisy
 
             //pp == wszystkie przepisy
             IQueryable<Przepis> pp = from p in _context.Przepis select p;
-            bool any = favIQ.Any(u => u.Id_usera == User.Identity.Name && u.Przepis.ID == resultint);
+            bool any = favIQ.Any(u => u.Id_usera == User.Identity.Name && u.PrzepisID == resultint);
 
             //ppp == obecnie przeglądany przepis
             Przepis ppp = pp.FirstOrDefault(pp => pp.ID == resultint);
@@ -113,7 +113,7 @@ namespace MajsterChef.Pages.Przepisy
                 Favourites fav = new Favourites
                 {
                     Id_usera = User.Identity.Name,
-                    Przepis = ppp
+                    PrzepisID = ppp.ID
                 };
                 _context.Favourites.Add(fav);
                 _context.SaveChanges();

@@ -29,23 +29,14 @@ namespace MajsterChef.Pages.Ulubione
                 return name.Split('@')[0];
             else return "Anonymous";
         }
-
+        public IList<Przepis> Przepisy { get; set; }
         public async Task OnGetAsync()
         {
-            //PROBLEM - NIE PRZEKAZUJE PRZEPISU! Jest Favourite.Id_usera, ale Przepis jest NULLem
-            IQueryable<Favourites> FavouritesIQ = from f in _context.Favourites select f;
-            //weź wszystkie istniejące przepisy
-            //PrzepisyIQ = from s in _context.Przepis select s;
-
-            //weź wszystkie polubienia przez użytkowników
-
-            //weź tylko te polubienia, które należą do mnie
-            FavouritesIQ = FavouritesIQ.Where(f => f.Id_usera == User.Identity.Name);
-
-            //weź te przepisy, których id równe jest id polubień
-            //PrzepisyIQ = PrzepisyIQ.Where(s => s.ID.Equals(FavouritesIQ.Where(f => f.Id_wpisu == s.ID)));
-            //Przepis = await _context.Przepis.Where().ToListAsync();
-            Favourites = await FavouritesIQ.AsNoTracking().OrderByDescending(u => u.Przepis.Data_publikacji).ToListAsync();
+            IQueryable<Favourites> ulubione = from b in _context.Favourites
+                                              where b.Id_usera == User.Identity.Name
+                                              select b;
+            var ulub = _context.Przepis.Where(c => ulubione.Select(b => b.PrzepisID).Contains(c.ID));
+            Przepisy = await ulub.AsNoTracking().OrderByDescending(u => u.Data_publikacji).ToListAsync();
         }
     }
 }
