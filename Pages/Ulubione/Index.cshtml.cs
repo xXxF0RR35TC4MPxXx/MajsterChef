@@ -20,9 +20,7 @@ namespace MajsterChef.Pages.Ulubione
         {
             _context = context;
         }
-        //public IList<Favourites> Przepis { get; set; }
-        public IList<Favourites> Favourites { get; set; }
-        //public IQueryable<Przepis> PrzepisyIQ { get;set; }
+
         public string UserName(string name)
         {
             if (!String.IsNullOrEmpty(name))

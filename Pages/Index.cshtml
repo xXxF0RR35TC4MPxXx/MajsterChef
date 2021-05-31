@@ -29,7 +29,7 @@
         {
         <tr>
             <td>
-                @Model.UserName(item.Owner)
+                <a href="./Profile?UserName=@Model.UserName(item.Owner)">@Model.UserName(item.Owner)</a>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Nazwa)

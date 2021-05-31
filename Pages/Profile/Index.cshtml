@@ -1,35 +1,35 @@
 ﻿@page
-@model MajsterChef.Pages.Ulubione.IndexModel
+@model MajsterChef.Pages.Profile.IndexModel
 
 @{
-    ViewData["Title"] = "Twoje ulubione!";
+    ViewData["Title"] = "Przepisy autorstwa " + Model.UserName;
 }
 
-<h1>Twoje ulubione przepisy!</h1>
+<h1>Przepisy autorstwa @Model.UserName</h1>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Przepisy[0].Owner)
+                @Html.DisplayNameFor(model => model.Przepis[0].Owner)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Przepisy[0].Nazwa)
+                @Html.DisplayNameFor(model => model.Przepis[0].Nazwa)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Przepisy[0].Data_publikacji)
+                @Html.DisplayNameFor(model => model.Przepis[0].Data_publikacji)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Przepisy[0].Score)
+                @Html.DisplayNameFor(model => model.Przepis[0].Score)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Przepisy) {
+@foreach (var item in Model.Przepis) {
         <tr>
             <td>
-                <a href="/Profile?UserName=@Model.UserName(item.Owner)">@Model.UserName(item.Owner)</a>
+                <a href="Profile/?UserName=@Model.NameUser(item.Owner)">@Model.NameUser(item.Owner)</a>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Nazwa)
@@ -45,9 +45,9 @@
                     <a asp-page="/Przepisy/Details" asp-route-id="@item.ID">Details</a>
                     @if (item.Owner == User.Identity.Name)
                     {
-                        <text>| </text><a asp-page="/Przepisy/Edit" asp-route-id="@item.ID">Edit</a>;
+                        <text>| </text><a asp-page="/Przepisy/Edit" asp-route-id="@item.ID">Edit</a> ;
+                        <text>| </text><a asp-page="/Przepisy/Delete" asp-route-id="@item.ID">Delete</a>;
                     }
-                    | <a asp-page="/Ulubione/Delete" asp-route-id="@Model.FavID(item.ID)">Usuń z ulubionych</a>
                 </p>
             </td>
         </tr>

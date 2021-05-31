@@ -1,0 +1,69 @@
+﻿@page
+@model MajsterChef.Pages.Profile.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Przepis</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Przepis.Owner" class="control-label"></label>
+                <input asp-for="Przepis.Owner" class="form-control" />
+                <span asp-validation-for="Przepis.Owner" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Przepis.Nazwa" class="control-label"></label>
+                <input asp-for="Przepis.Nazwa" class="form-control" />
+                <span asp-validation-for="Przepis.Nazwa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Przepis.Opis_wykonania" class="control-label"></label>
+                <input asp-for="Przepis.Opis_wykonania" class="form-control" />
+                <span asp-validation-for="Przepis.Opis_wykonania" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Przepis.Data_publikacji" class="control-label"></label>
+                <input asp-for="Przepis.Data_publikacji" class="form-control" />
+                <span asp-validation-for="Przepis.Data_publikacji" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Przepis.Lista_skladnikow" class="control-label"></label>
+                <input asp-for="Przepis.Lista_skladnikow" class="form-control" />
+                <span asp-validation-for="Przepis.Lista_skladnikow" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Przepis.Likes" class="control-label"></label>
+                <input asp-for="Przepis.Likes" class="form-control" />
+                <span asp-validation-for="Przepis.Likes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Przepis.Dislikes" class="control-label"></label>
+                <input asp-for="Przepis.Dislikes" class="form-control" />
+                <span asp-validation-for="Przepis.Dislikes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Przepis.Score" class="control-label"></label>
+                <input asp-for="Przepis.Score" class="form-control" />
+                <span asp-validation-for="Przepis.Score" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
