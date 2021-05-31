@@ -2,69 +2,38 @@
 @model MajsterChef.Pages.Ulubione.DeleteModel
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Unfavourite";
 }
 
-<h1>Delete</h1>
+<h1>Unfavourite</h1>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Czy na pewno chcesz usunąć przepis z ulubionych?</h3>
 <div>
     <h4>Przepis</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Przepis.Owner)
+            @Html.DisplayNameFor(model => model.Ulubiony.Id)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Przepis.Owner)
+            @Html.DisplayFor(model => model.Ulubiony.Id)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Przepis.Nazwa)
+            @Html.DisplayNameFor(model => model.Ulubiony.Id_usera)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Przepis.Nazwa)
+            @Html.DisplayFor(model => model.Ulubiony.Id_usera)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Przepis.Opis_wykonania)
+            @Html.DisplayNameFor(model => model.Ulubiony.PrzepisID)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Przepis.Opis_wykonania)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Przepis.Data_publikacji)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Przepis.Data_publikacji)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Przepis.Lista_skladnikow)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Przepis.Lista_skladnikow)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Przepis.Likes)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Przepis.Likes)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Przepis.Dislikes)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Przepis.Dislikes)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Przepis.Score)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Przepis.Score)
+            @Html.DisplayFor(model => model.Ulubiony.PrzepisID)
         </dd>
     </dl>
-    
     <form method="post">
-        <input type="hidden" asp-for="Przepis.ID" />
+        <input type="hidden" asp-for="Ulubiony.Id" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-page="./Index">Back to List</a>
+        <a asp-page="/Index">Back to List</a>
     </form>
 </div>

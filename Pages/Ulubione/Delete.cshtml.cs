@@ -20,7 +20,7 @@ namespace MajsterChef.Pages.Ulubione
         }
 
         [BindProperty]
-        public Przepis Przepis { get; set; }
+        public Favourites Ulubiony { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,9 +29,9 @@ namespace MajsterChef.Pages.Ulubione
                 return NotFound();
             }
 
-            Przepis = await _context.Przepis.FirstOrDefaultAsync(m => m.ID == id);
+            Ulubiony = await _context.Favourites.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (Przepis == null)
+            if (Ulubiony == null)
             {
                 return NotFound();
             }
@@ -45,15 +45,15 @@ namespace MajsterChef.Pages.Ulubione
                 return NotFound();
             }
 
-            Przepis = await _context.Przepis.FindAsync(id);
+            Ulubiony = await _context.Favourites.FindAsync(id);
 
-            if (Przepis != null)
+            if (Ulubiony != null)
             {
-                _context.Przepis.Remove(Przepis);
+                _context.Favourites.Remove(Ulubiony);
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/Index");
         }
     }
 }

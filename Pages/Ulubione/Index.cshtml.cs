@@ -29,6 +29,12 @@ namespace MajsterChef.Pages.Ulubione
                 return name.Split('@')[0];
             else return "Anonymous";
         }
+        public IQueryable<Favourites> Ulub { get; set; }
+        public int FavID(int? id)
+        {
+            Ulub = _context.Favourites.Where(m => m.PrzepisID == id && m.Id_usera==User.Identity.Name);
+            return Ulub.First().Id;
+        }
         public IList<Przepis> Przepisy { get; set; }
         public async Task OnGetAsync()
         {

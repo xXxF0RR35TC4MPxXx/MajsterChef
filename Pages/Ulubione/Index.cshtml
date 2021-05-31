@@ -45,9 +45,9 @@
                     <a asp-page="/Przepisy/Details" asp-route-id="@item.ID">Details</a>
                     @if (item.Owner == User.Identity.Name)
                     {
-                        <text>| </text><a asp-page="/Przepisy/Edit" asp-route-id="@item.ID">Edit</a> ;
-                        <text>| </text><a asp-page="/Przepisy/Delete" asp-route-id="@item.ID">Delete</a>;
+                        <text>| </text><a asp-page="/Przepisy/Edit" asp-route-id="@item.ID">Edit</a>;
                     }
+                    | <a asp-page="/Ulubione/Delete" asp-route-id="@Model.FavID(item.ID)">Usuń z ulubionych</a>
                 </p>
             </td>
         </tr>
