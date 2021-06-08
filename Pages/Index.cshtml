@@ -27,30 +27,34 @@
     <tbody>
         @foreach (var item in Model.Przepis)
         {
-        <tr>
-            <td>
-                <a href="./Profile?UserName=@Model.UserName(item.Owner)">@Model.UserName(item.Owner)</a>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nazwa)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Data_publikacji)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Score)
-            </td>
-            <td>
-                <p>
-                    <a asp-page="./Przepisy/Details" asp-route-id="@item.ID">Details</a>
-                    @if (item.Owner == User.Identity.Name)
-                    {
-                        <text>| </text><a asp-page="./Przepisy/Edit" asp-route-id="@item.ID">Edit</a> ;
-                        <text>| </text><a asp-page="./Przepisy/Delete" asp-route-id="@item.ID">Delete</a>;
-                    }
-                </p>
-            </td>
-        </tr>
+            @if(item.Data_publikacji <= DateTime.Now)
+            {
+                <tr>
+                    <td>
+                        <a href="./Profile?UserName=@Model.UserName(item.Owner)">@Model.UserName(item.Owner)</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nazwa)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Data_publikacji)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Score)
+                    </td>
+                    <td>
+                        <p>
+                            <a asp-page="./Przepisy/Details" asp-route-id="@item.ID">Details</a>
+                            @if (item.Owner == User.Identity.Name)
+                            {
+                                <text>| </text><a asp-page="./Przepisy/Edit" asp-route-id="@item.ID">Edit</a> ;
+                                <text>| </text><a asp-page="./Przepisy/Delete" asp-route-id="@item.ID">Delete</a>;
+                            }
+                        </p>
+                    </td>
+                </tr>
+            }
+        
         }
     </tbody>
 </table>

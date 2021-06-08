@@ -46,8 +46,6 @@
             <dd class="col-sm-10">
 
                 <form runat="server" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-                    @if (Model.DisableDislike != "disable")
-                    {
                         <div style="display:inline;float:left">
                             <button id="btnDislike"
                                     Text="-"
@@ -59,17 +57,15 @@
                                     width="50px"
                                     BorderStyle="Outset"
                                     onclick="this.disabled = true;"
-                                    disabled=@Model.DisableDislike
                                     asp-route-itemid="@Model.Przepis.ID"
                                     asp-page-handler="Dislike">
                                 -
                             </button>&nbsp;
 
                         </div>
-                    }
+                    
                     &nbsp; @Model.Score() &nbsp;
-                    @if (Model.DisableLike != "disabled")
-                    {
+                   
                         <div style="display:inline;float:left">
                             <button id="btnLike"
                                     Text="+"
@@ -81,13 +77,12 @@
                                     width="50px"
                                     BorderStyle="Outset"
                                     onclick="this.disabled = true;"
-                                    disabled=@Model.DisableLike
                                     asp-route-itemid="@Model.Przepis.ID"
                                     asp-page-handler="Like">
                                 +
                             </button>
                         </div>
-                    }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <div style="display:inline;float:left">
                         <button id="btnFav"
                                 Text="Fav"
@@ -99,7 +94,6 @@
                                 width="50px"
                                 BorderStyle="Outset"
                                 onclick="this.disabled = true;"
-                                disabled=@Model.DisableFavourite
                                 asp-route-itemid="@Model.Przepis.ID"
                                 asp-page-handler="Favourite">
                             Dodaj do ulubionych!

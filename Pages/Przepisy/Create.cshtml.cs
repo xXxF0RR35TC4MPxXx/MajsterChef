@@ -40,7 +40,6 @@ namespace MajsterChef.Pages.Przepisy
             if (!string.IsNullOrEmpty(User.Identity.Name))
                 Przepis.Owner = User.Identity.Name;
             else Przepis.Owner = "Anonymous";
-            Przepis.Data_publikacji = DateTime.Now;
             _context.Przepis.Add(Przepis);
             await _context.SaveChangesAsync();
 

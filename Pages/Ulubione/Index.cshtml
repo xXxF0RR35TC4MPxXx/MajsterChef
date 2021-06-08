@@ -27,6 +27,8 @@
     </thead>
     <tbody>
 @foreach (var item in Model.Przepisy) {
+    @if (item.Data_publikacji <= DateTime.Now)
+    {
         <tr>
             <td>
                 <a href="/Profile?UserName=@Model.UserName(item.Owner)">@Model.UserName(item.Owner)</a>
@@ -51,6 +53,7 @@
                 </p>
             </td>
         </tr>
+    }
 }
     </tbody>
 </table>

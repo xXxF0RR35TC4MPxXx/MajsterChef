@@ -30,7 +30,7 @@ namespace MajsterChef.Pages.Przepisy
                 return name.Split('@')[0];
             else return "Anonymous";
         }
-        public int ajdi, likes, dislikes, score;
+        public int likes, dislikes, score;
         public string ReturnUrl;
         [BindProperty]
         public Przepis Przepis { get; set; }
@@ -53,9 +53,6 @@ namespace MajsterChef.Pages.Przepisy
             }
             return Page();
         }
-
-        public string DisableLike, DisableDislike, DisableFavourite;
-
 
         public int Score()
         {
@@ -84,8 +81,6 @@ namespace MajsterChef.Pages.Przepisy
         }
         private void BtnFavourite_Click()
         {
-            DisableLike = "disable";
-            DisableDislike = "disable";
             using SqlConnection con = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=PrzepisyDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
             using SqlCommand command = con.CreateCommand();
             con.Open();
@@ -122,8 +117,6 @@ namespace MajsterChef.Pages.Przepisy
         }
         private void BtnLike_Click()
         {
-            DisableLike = "disable";
-            DisableDislike = "disable";
             using SqlConnection con = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=PrzepisyDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
             using SqlCommand command = con.CreateCommand();
             
@@ -133,32 +126,57 @@ namespace MajsterChef.Pages.Przepisy
             command.Parameters.AddWithValue("@id", resultint);
             IQueryable<Oceny> przepisyIQ = from s in _context.Oceny
                                            select s;
-            bool any;
-            any = przepisyIQ.Any(u => u.Id_usera == User.Identity.Name && u.Id_wpisu == resultint && u.Czy_ocenil == 't');
 
-            if (!any)
+            //Sprawdzenie, czy dany przepis został przez usera oceniony na +
+            bool naplus, naminus, nanic;
+            naplus = przepisyIQ.Any(u => u.Id_usera == User.Identity.Name && u.Id_wpisu == resultint && u.Czy_ocenil == '+');
+            naminus = przepisyIQ.Any(u => u.Id_usera == User.Identity.Name && u.Id_wpisu == resultint && u.Czy_ocenil == '-');
+            nanic = przepisyIQ.Any(u => u.Id_usera == User.Identity.Name && u.Id_wpisu == resultint && u.Czy_ocenil == ' ');
+            command.Parameters.AddWithValue("@user", User.Identity.Name);
+            if (!naplus)
             {
-                command.CommandText = "UPDATE dbo.Przepis SET Likes = Likes + 1 Where ID = @id";
-                command.ExecuteNonQuery();
-                command.CommandText = "UPDATE dbo.Przepis SET Score = Score + 1 Where ID = @id";
-                command.ExecuteNonQuery();
-                Oceny oc = new Oceny
+                //przejście z - na 0
+                if(naminus)
                 {
-                    Id_usera = User.Identity.Name,
-                    Id_wpisu = resultint,
-                    Czy_ocenil = 't'
-                };
-                _context.Oceny.Add(oc);
-                _context.SaveChanges();
+                    command.CommandText = "UPDATE dbo.Przepis SET Dislikes = Dislikes - 1 Where ID = @id";
+                    command.ExecuteNonQuery();
+                    command.CommandText = "UPDATE dbo.Przepis SET Score = Score + 1 Where ID = @id";
+                    command.ExecuteNonQuery();
+                    command.CommandText = "UPDATE dbo.Oceny SET Czy_ocenil = ' ' Where Id_wpisu = @id AND Id_usera = @user";
+                    command.ExecuteNonQuery();
+                }
+                //przejście z 0 na +
+                else if(nanic)
+                {
+                    command.CommandText = "UPDATE dbo.Przepis SET Likes = Likes + 1 Where ID = @id";
+                    command.ExecuteNonQuery();
+                    command.CommandText = "UPDATE dbo.Przepis SET Score = Score + 1 Where ID = @id";
+                    command.ExecuteNonQuery();
+                    command.CommandText = "UPDATE dbo.Oceny SET Czy_ocenil = '+' Where Id_wpisu = @id AND Id_usera = @user";
+                    command.ExecuteNonQuery(); 
+                }
+                else
+                { 
+                    command.CommandText = "UPDATE dbo.Przepis SET Likes = Likes + 1 Where ID = @id";
+                    command.ExecuteNonQuery();
+                    command.CommandText = "UPDATE dbo.Przepis SET Score = Score + 1 Where ID = @id";
+                    command.ExecuteNonQuery();
+                    Oceny oc = new Oceny
+                        {
+                            Id_usera = User.Identity.Name,
+                            Id_wpisu = resultint,
+                            Czy_ocenil = '+'
+                        };
+                        _context.Oceny.Add(oc);
+                        _context.SaveChanges();
+                }
+                
             }
             con.Close();
 
         }
         private void BtnDislike_Click()
         {
-            
-            DisableLike = "disable";
-            DisableDislike = "disable";
 
             using SqlConnection con = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=PrzepisyDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
             using SqlCommand command = con.CreateCommand();
@@ -169,23 +187,51 @@ namespace MajsterChef.Pages.Przepisy
             command.Parameters.AddWithValue("@id", resultint);
             IQueryable<Oceny> przepisyIQ = from s in _context.Oceny
                                              select s;
-            bool any;
-            any = przepisyIQ.Any(u => u.Id_usera==User.Identity.Name && u.Id_wpisu==resultint && u.Czy_ocenil=='t');
+            bool naplus, naminus, nanic;
+            naplus = przepisyIQ.Any(u => u.Id_usera == User.Identity.Name && u.Id_wpisu == resultint && u.Czy_ocenil == '+');
+            naminus = przepisyIQ.Any(u => u.Id_usera == User.Identity.Name && u.Id_wpisu == resultint && u.Czy_ocenil == '-');
+            nanic = przepisyIQ.Any(u => u.Id_usera == User.Identity.Name && u.Id_wpisu == resultint && (u.Czy_ocenil == '0' || u.Czy_ocenil==' '));
+            command.Parameters.AddWithValue("@user", User.Identity.Name);
 
-            if (!any)
+            //teraz na minus
+            if (!naminus)
             {
-                command.CommandText = "UPDATE dbo.Przepis SET Dislikes = Dislikes + 1 Where ID = @id";
-                command.ExecuteNonQuery();
-                command.CommandText = "UPDATE dbo.Przepis SET Score = Score - 1 Where ID = @id";
-                command.ExecuteNonQuery();
-                Oceny oc = new Oceny
+                //przejście z + na 0
+                if (naplus)
                 {
-                    Id_usera = User.Identity.Name,
-                    Id_wpisu = resultint,
-                    Czy_ocenil = 't'
-                };
-                _context.Oceny.Add(oc);
-                _context.SaveChanges();
+                    command.CommandText = "UPDATE dbo.Przepis SET Likes = Likes - 1 Where ID = @id";
+                    command.ExecuteNonQuery();
+                    command.CommandText = "UPDATE dbo.Przepis SET Score = Score - 1 Where ID = @id";
+                    command.ExecuteNonQuery();
+                    command.CommandText = "UPDATE dbo.Oceny SET Czy_ocenil = ' ' Where Id_wpisu = @id AND Id_usera = @user";
+                    command.ExecuteNonQuery();
+                }
+                //przejście z 0 na -
+                else if (nanic)
+                {
+                    command.CommandText = "UPDATE dbo.Przepis SET Dislikes = Dislikes + 1 Where ID = @id";
+                    command.ExecuteNonQuery();
+                    command.CommandText = "UPDATE dbo.Przepis SET Score = Score - 1 Where ID = @id";
+                    command.ExecuteNonQuery();
+                    command.CommandText = "UPDATE dbo.Oceny SET Czy_ocenil = '-' Where Id_wpisu = @id AND Id_usera = @user";
+                    command.ExecuteNonQuery();
+                }
+                else
+                {
+                    command.CommandText = "UPDATE dbo.Przepis SET Dislikes = Dislikes + 1 Where ID = @id";
+                    command.ExecuteNonQuery();
+                    command.CommandText = "UPDATE dbo.Przepis SET Score = Score - 1 Where ID = @id";
+                    command.ExecuteNonQuery();
+                    Oceny oc = new Oceny
+                    {
+                        Id_usera = User.Identity.Name,
+                        Id_wpisu = resultint,
+                        Czy_ocenil = '-'
+                    };
+                    _context.Oceny.Add(oc);
+                    _context.SaveChanges();
+                }
+
             }
             con.Close();
             
