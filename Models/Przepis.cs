@@ -19,7 +19,7 @@ namespace MajsterChef.Models
         public string Opis_wykonania { get; set; }
         public DateTime Data_publikacji { get; set; }
         [Required]
-        [MaxLength(500)]
+        [MaxLength(1000)]
         public string Lista_skladnikow { get; set; }
         public int Likes { get; set; }
         public int Dislikes { get; set; }

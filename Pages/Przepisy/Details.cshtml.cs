@@ -34,6 +34,9 @@ namespace MajsterChef.Pages.Przepisy
         public string ReturnUrl;
         [BindProperty]
         public Przepis Przepis { get; set; }
+        [BindProperty]
+        public Photo Photo { get; set; }
+        public IList<Photo> Photos { get; set; }
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -51,9 +54,14 @@ namespace MajsterChef.Pages.Przepisy
             {
                 return RedirectToPage("Index");
             }
+            //odtąd
+            IQueryable<Photo> current_photo = from b in _context.Photos
+                                              where b.PrzepisID == EntryID
+                                              select b;
+            Photos = await current_photo.AsNoTracking().ToListAsync();
+            //dotąd
             return Page();
         }
-
         public int Score()
         {
             return score;
@@ -78,6 +86,36 @@ namespace MajsterChef.Pages.Przepisy
             await _context.SaveChangesAsync();
             // all  done
             return RedirectToPage("Index");
+        }
+
+        public async Task<IActionResult> OnPostSendPhoto()
+        {
+            var url = Request.Form["URL"];
+            if(!String.IsNullOrEmpty(url))
+            {
+                //sprawdzić przy wysyłaniu, czy taki obiekt już istnieje
+                SendPhoto_Click(url);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToPage("Index");
+            
+        }
+        private void SendPhoto_Click(string url)
+        {
+            var result = new string(Request.QueryString.ToString().Where(c => char.IsDigit(c)).ToArray());
+            int resultint = Convert.ToInt32(result);
+            IQueryable<Photo> PhotoIQ = from p in _context.Photos select p;
+            bool any = PhotoIQ.Any(u => u.PrzepisID == resultint && u.URL == url);
+            if(!any)
+            {
+                Photo fot = new Photo
+                {
+                    PrzepisID = resultint,
+                    URL = url
+                };
+                _context.Photos.Add(fot);
+            }
+            _context.SaveChanges();
         }
         private void BtnFavourite_Click()
         {

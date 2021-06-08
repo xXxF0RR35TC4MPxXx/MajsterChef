@@ -46,42 +46,42 @@
             <dd class="col-sm-10">
 
                 <form runat="server" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-                        <div style="display:inline;float:left">
-                            <button id="btnDislike"
-                                    Text="-"
-                                    type="submit"
-                                    name="button"
-                                    value="dislike"
-                                    runat="server"
-                                    height="auto"
-                                    width="50px"
-                                    BorderStyle="Outset"
-                                    onclick="this.disabled = true;"
-                                    asp-route-itemid="@Model.Przepis.ID"
-                                    asp-page-handler="Dislike">
-                                -
-                            </button>&nbsp;
+                    <div style="display:inline;float:left">
+                        <button id="btnDislike"
+                                Text="-"
+                                type="submit"
+                                name="button"
+                                value="dislike"
+                                runat="server"
+                                height="auto"
+                                width="50px"
+                                BorderStyle="Outset"
+                                onclick="this.disabled = true;"
+                                asp-route-itemid="@Model.Przepis.ID"
+                                asp-page-handler="Dislike">
+                            -
+                        </button>&nbsp;
 
-                        </div>
-                    
+                    </div>
+
                     &nbsp; @Model.Score() &nbsp;
-                   
-                        <div style="display:inline;float:left">
-                            <button id="btnLike"
-                                    Text="+"
-                                    type="submit"
-                                    value="like"
-                                    name="button"
-                                    runat="server"
-                                    height="auto"
-                                    width="50px"
-                                    BorderStyle="Outset"
-                                    onclick="this.disabled = true;"
-                                    asp-route-itemid="@Model.Przepis.ID"
-                                    asp-page-handler="Like">
-                                +
-                            </button>
-                        </div>
+
+                    <div style="display:inline;float:left">
+                        <button id="btnLike"
+                                Text="+"
+                                type="submit"
+                                value="like"
+                                name="button"
+                                runat="server"
+                                height="auto"
+                                width="50px"
+                                BorderStyle="Outset"
+                                onclick="this.disabled = true;"
+                                asp-route-itemid="@Model.Przepis.ID"
+                                asp-page-handler="Like">
+                            +
+                        </button>
+                    </div>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <div style="display:inline;float:left">
                         <button id="btnFav"
@@ -102,13 +102,43 @@
                 </form>
             </dd>
             <dt class="col-sm-2">
-                
+
             </dt>
             <dd class="col-sm-10">
-                
+
             </dd>
         }
     </dl>
+    @if(User.Identity.IsAuthenticated)
+    { 
+        <div class="row">
+            <div class="col-md-4" >
+                <form runat="server" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                    <div class="form-group">
+                        <label class="control-label">Dodaj link do zdjęcia</label>
+                        <input name="URL" asp-for="@Model.Photo.URL" class="form-control" />
+                        <span asp-validation-for="@Model.Photo.URL" class="text-danger"></span>
+                    </div>
+                    <div style="display:inline;float:left">
+                        <button id="btnSendPhoto"
+                                Text="-"
+                                type="submit"
+                                name="button"
+                                value="SendPhoto"
+                                runat="server"
+                                height="auto"
+                                width="50px"
+                                BorderStyle="Outset"
+                                onclick="this.disabled = true;"
+                                asp-route-itemid="@Model.Przepis.ID"
+                                asp-page-handler="SendPhoto">
+                            Dodaj
+                        </button>&nbsp;
+                    </div>
+                </form>
+            </div>
+        </div>
+     }
 </div>
 <div>
     <p>
@@ -117,3 +147,28 @@
         <a asp-page="./Index">Wróć do listy</a>
     </p>
 </div>
+    <div>
+        <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Zdjęcia:
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Photos)
+                    {
+                        <tr>
+                            <td>
+                                <img src="@Url.Content(item.URL)" style="max-height:500px; width:50%; display:block; margin-left:auto; margin-right:auto;" alt="" />
+                            </td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+    </div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
