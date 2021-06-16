@@ -5,52 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - MajsterChef</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/site.css" /> 
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">MajsterChef</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <partial name="_LoginPartial" />
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Przepisy/Index">Wszystkie Przepisy</a>
-                        </li>
-                        @if (!string.IsNullOrEmpty(User.Identity.Name))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" href="/Profile/?UserName=@User.Identity.Name">Twoje Przepisy</a>
-                            </li>
-                        }
-                        @if (!string.IsNullOrEmpty(User.Identity.Name))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Ulubione/Index">Twoje Ulubione</a>
-                            </li>
-                        }
-                    </ul>
-                </div>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-blue bg-white border-bottom box-shadow mb-3">
+        <div class="container">
+            <a class="navbar-brand" asp-area="" asp-page="/Index" style="font-weight:bold">MajsterChef</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <partial name="_LoginPartial" />
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Index" style="text-decoration:underline">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Przepisy/Index" style="text-decoration:underline">Wszystkie Przepisy</a>
+                    </li>
+                    @if (!string.IsNullOrEmpty(User.Identity.Name))
+                    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="/Profile/?UserName=@User.Identity.Name" style="text-decoration:underline">Twoje Przepisy</a>
+        </li>}
+                    @if (!string.IsNullOrEmpty(User.Identity.Name))
+                    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-page="/Ulubione/Index" style="text-decoration:underline">Twoje Ulubione</a>
+        </li>}
+                </ul>
             </div>
+        </div>
         </nav>
-    </header>
+    </header> 
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - MajsterChef - <a asp-area="" asp-page="/Przepisy/Index">Lista Przepisów</a>
+    <footer class="border-top footer text-dark">
+        <div class="container" style="background-color:white;">
+            &copy; 2021 - MajsterChef - Wszystkie prawa zastrzeżone!</a>
         </div>
     </footer>
 

@@ -5,9 +5,9 @@
     ViewData["Title"] = "Przepisy autorstwa " + Model.UserName;
 }
 
-<h1>Przepisy autorstwa @Model.UserName</h1>
+<h1 style="text-align:center; font-family:'Lucida Console'">Przepisy autorstwa @Model.UserName</h1>
 
-<table class="table">
+<table class="table table-bordered table-dark">
     <thead>
         <tr>
             <th>
@@ -32,7 +32,7 @@
             {
                 <tr>
                     <td>
-                        <a href="?UserName=@Model.NameUser(item.Owner)">@Model.NameUser(item.Owner)</a>
+                        <a href="Profile/?UserName=@Model.NameUser(item.Owner)">@Model.NameUser(item.Owner)</a>
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Nazwa)

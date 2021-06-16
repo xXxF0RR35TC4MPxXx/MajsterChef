@@ -5,9 +5,9 @@
     ViewData["Title"] = "Strona główna - Top 10 przepisów!";
 }
 
-<h1>Witamy na stronie MajsterChef!</h1>
-<h3>Oto 10 najlepiej ocenianych przepisów na naszej stronie!</h3><br />
-<table class="table">
+<h1 style="text-align:center; font-family:'Lucida Console'">Witamy na stronie MajsterChef!</h1><br />
+<h3 style="text-align:center; font-family:'Lucida Console'">Oto 10 najlepiej ocenianych przepisów na naszej stronie!</h3><br />
+<table class="table table-bordered table-dark">
     <thead>
         <tr>
             <th>
@@ -17,10 +17,14 @@
                 @Html.DisplayNameFor(model => model.Przepis[0].Nazwa)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Przepis[0].Data_publikacji)
+           <!--  @Html.DisplayNameFor(model => model.Przepis[0].Data_publikacji) -->
+                Data publikacji
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Przepis[0].Score)
+            </th>
+            <th>
+                Options
             </th>
         </tr>
     </thead>
@@ -42,6 +46,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Score)
                     </td>
+                    
                     <td>
                         <p>
                             <a asp-page="./Przepisy/Details" asp-route-id="@item.ID">Details</a>

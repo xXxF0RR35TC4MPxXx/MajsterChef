@@ -5,22 +5,23 @@
     ViewData["Title"] = "Lista przepisów!";
 }
 
-<h1>Lista przepisów użytkowników</h1>
-@if(!(string.IsNullOrEmpty(User.Identity.Name)))
-{ <p>
-    <a asp-page="Create">Dodaj nowy przepis!</a>
-</p>
-}
+<h1 style="text-align:center; font-family:'Lucida Console'">Lista przepisów użytkowników</h1><br />
+
 <form asp-action="Index" method="get">
     <div class="form-actions no-color">
-        <p>
+        <p style="font-family:'Lucida Console'">
             Wyszukaj: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
             <input type="submit" value="Search" class="btn btn-default" /> |
             <a asp-action="Index">Wróć do wszystkich przepisów</a>
-        </p>
-    </div>
+            @if (!(string.IsNullOrEmpty(User.Identity.Name)))
+            {
+            <p style="font-family:'Lucida Console'">
+                <a asp-page="Create">Dodaj nowy przepis!</a>
+            </p>}
+            </p>
+        </div>
 </form>
-    <table class="table">
+    <table class="table table-bordered table-dark">
         <thead>
             <tr>
                 <th>
